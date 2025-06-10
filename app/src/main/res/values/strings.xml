@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NewsHive</string>
+    <string name="login_header">Hello ... Sign in !</string>
+    <string name="email_address_hint">Email address</string>
+    <string name="password_hint">Password</string>
+    <string name="sign_in_button_text">Sign in</string>
+    <string name="forgot_password_text">Forgot Password?</string>
+    <string name="dont_have_account_text">Sign up Instead</string>
+
+    <string name="signup_header">Create an account Here! </string>
+    <string name="confirm_password_hint">Confirm Password</string>
+    <string name="sign_up_button_text">Sign up</string>
+    <string name="already_have_account_text">Already have an account?</string>
+    <string name="sign_in_link_text">Sign in</string>
+    <string name="sign_up_title">Sign Up</string>
+    <string name="username_hint">Username</string>
+
+</resources>

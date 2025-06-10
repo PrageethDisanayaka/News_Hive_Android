@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "550864690118",
+    "firebase_url": "https://newshiveapp-c4721-default-rtdb.firebaseio.com",
+    "project_id": "newshiveapp-c4721",
+    "storage_bucket": "newshiveapp-c4721.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:550864690118:android:50c051278025b8087470c7",
+        "android_client_info": {
+          "package_name": "com.example.digi_apps.newshive"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAodjOCkiPbRYup_yFEiNsedEjBDlKxni0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
