@@ -1,4 +1,4 @@
-package com.example.digi_apps.newshive; // Your package name
+package com.example.digi_apps.newshive; //  package name
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;

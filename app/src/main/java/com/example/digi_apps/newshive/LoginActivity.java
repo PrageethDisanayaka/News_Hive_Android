@@ -57,13 +57,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        // Optional: Implement Forgot Password link if needed later
+        // Implement Forgot Password link
         TextView forgotPasswordText = findViewById(R.id.forgot_password_text);
         forgotPasswordText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(LoginActivity.this, "Forgot Password clicked!", Toast.LENGTH_SHORT).show();
-                // Later: Implement password reset functionality
+                //  Implement password reset functionality
             }
         });
     }
@@ -86,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        // 2. Query Firebase Realtime Database for the user
+        //  Query Firebase Realtime Database for the user
         DatabaseReference usersRef = mDatabase.child("users");
         usersRef.orderByChild("email").equalTo(email)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -97,8 +97,8 @@ public class LoginActivity extends AppCompatActivity {
                             for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                                 User user = userSnapshot.getValue(User.class); // Get User object
 
-                                // !! IMPORTANT: In a real app, you would compare hashed passwords here.
-                                // For this assignment, we are comparing plain text passwords as per instruction.
+                                // !!  passwords here.
+                                //  comparing  passwords .
                                 if (user != null && user.password.equals(password)) {
                                     Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
                                     // Navigate to HomeActivity
