@@ -34,12 +34,29 @@
                 android:id="@+id/home_title_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Home"
+                android:layout_weight="1"
                 android:layout_marginStart="16dp"
                 android:textColor="#000000"
-                android:textSize="20sp"
+                android:textSize="15sp"
                 android:fontFamily="sans-serif-medium"
-                android:gravity="center_vertical"/>
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:ellipsize="end"
+                tools:text="Welcome, John Doe!"/>
+
+
+            <ImageButton
+                android:id="@+id/overflow_menu_button"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="16dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_more_vert" app:tint="#000000"
+                android:layout_gravity="right"
+                android:contentDescription="Menu" />
+
+
+
 
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
