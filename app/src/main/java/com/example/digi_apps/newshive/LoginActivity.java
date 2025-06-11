@@ -68,9 +68,24 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    private boolean isInternetAvailable() {
+        android.net.ConnectivityManager cm =
+                (android.net.ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        android.net.NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        return activeNetwork != null && activeNetwork.isConnected();
+    }
+
+
     private void loginUser() {
         final String email = emailEditText.getText().toString().trim();
         final String password = passwordEditText.getText().toString().trim();
+        
+
+
+        if (!isInternetAvailable()) {
+            Toast.makeText(LoginActivity.this, "No internet connection. Please check your connection.", Toast.LENGTH_LONG).show();
+            return;
+        }
 
         // 1. Client-side Validation
         if (TextUtils.isEmpty(email)) {
