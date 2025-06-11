@@ -39,6 +39,11 @@
             android:exported="false">
         </activity>
 
+        <activity android:name="com.example.digi_apps.newshive.SearchActivity"
+            android:exported="false">
+        </activity>
+
+
 
     </application>
 
