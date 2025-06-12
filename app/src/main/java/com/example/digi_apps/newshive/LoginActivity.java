@@ -101,11 +101,15 @@ public class LoginActivity extends AppCompatActivity {
                                 // For this assignment, we are comparing plain text passwords as per instruction.
                                 if (user != null && user.password.equals(password)) {
                                     Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
+
+
                                     // Navigate to HomeActivity
                                     Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                    intent.putExtra("username", user.username); // Pass the username
+                                    intent.putExtra("email", user.email);       // Optional: Also pass email
                                     startActivity(intent);
-                                    finish(); // Close LoginActivity so user can't go back here with back button
-                                    return; // Exit loop after finding the user
+                                    finish();
+                                    // Exit loop after finding the user
                                 }
                             }
                             // If loop finishes, it means email matched but password didn't (or user was null)

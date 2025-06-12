@@ -115,35 +115,18 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
-
     //  this method  for update welcome msg
     private void updateWelcomeMessage() {
-        // Get the currently signed-in Firebase user
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+        // Get username passed from LoginActivity
+        String username = getIntent().getStringExtra("username");
 
-        if (currentUser != null) {
-            // Try to get the user's display name first
-            String userName = currentUser.getDisplayName();
-
-            if (userName != null && !userName.isEmpty()) {
-                // If display name exists, use it
-                homeTitleText.setText("Welcome back, " + userName + "!");
-            } else {
-                // If display name is not set, try to use part of their email
-                String email = currentUser.getEmail();
-                if (email != null && !email.isEmpty()) {
-                    String namePart = email.split("@")[0]; // Get the part before '@'
-                    homeTitleText.setText("Welcome back, " + namePart + "!");
-                } else {
-                    // Fallback to a generic message if no name or email part is available
-                    homeTitleText.setText("Welcome back, User!");
-                }
-            }
+        if (username != null && !username.isEmpty()) {
+            homeTitleText.setText("Welcome back, " + username + "!");
         } else {
-            // Fallback if no user is currently logged in (shouldn't happen if login is mandatory)
             homeTitleText.setText("Welcome to NewsHive!");
         }
     }
+
 
 
     // --- NEW: Method to show and handle PopupMenu ---
@@ -156,8 +139,14 @@ public class HomeActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 int itemId = item.getItemId();
                 if (itemId == R.id.menu_profile_settings) {
-                    Toast.makeText(HomeActivity.this, "Profile settings clicked!", Toast.LENGTH_SHORT).show();
-                    // TODO: Implement navigation to Profile Settings Activity
+                    // Navigate to ProfileSettingsActivity
+                    String username = getIntent().getStringExtra("username");
+                    String email = getIntent().getStringExtra("email");
+
+                    Intent intent = new Intent(HomeActivity.this, ProfileSettingsActivity.class);
+                    intent.putExtra("username", username);
+                    intent.putExtra("email", email);
+                    startActivity(intent);
                     return true;
                 } else if (itemId == R.id.menu_developer_info) {
                     Toast.makeText(HomeActivity.this, "Developer info clicked!", Toast.LENGTH_SHORT).show();
