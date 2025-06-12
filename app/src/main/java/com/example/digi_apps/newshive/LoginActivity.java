@@ -97,8 +97,8 @@ public class LoginActivity extends AppCompatActivity {
                             for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                                 User user = userSnapshot.getValue(User.class); // Get User object
 
-                                // !! IMPORTANT: In a real app, you would compare hashed passwords here.
-                                // For this assignment, we are comparing plain text passwords as per instruction.
+
+                                
                                 if (user != null && user.password.equals(password)) {
                                     Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
 
@@ -106,14 +106,14 @@ public class LoginActivity extends AppCompatActivity {
                                     // Navigate to HomeActivity
                                     Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                                     intent.putExtra("username", user.username); // Pass the username
-                                    intent.putExtra("email", user.email);       // Optional: Also pass email
+                                    intent.putExtra("email", user.email);       //  Also pass email
                                     startActivity(intent);
                                     finish();
                                     // Exit loop after finding the user
                                 }
                             }
                             // If loop finishes, it means email matched but password didn't (or user was null)
-                            Toast.makeText(LoginActivity.this, "Incorrect email or password.", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(LoginActivity.this, "Incorrect email or password.", Toast.LENGTH_SHORT).show();
 
                         } else {
                             // No user found with this email

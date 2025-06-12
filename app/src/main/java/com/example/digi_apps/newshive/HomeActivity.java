@@ -121,11 +121,13 @@ public class HomeActivity extends AppCompatActivity {
         String username = getIntent().getStringExtra("username");
 
         if (username != null && !username.isEmpty()) {
-            homeTitleText.setText("Welcome back, " + username + "!");
+            homeTitleText.setText("Hi.. Welcome , " + username + "!");
         } else {
             homeTitleText.setText("Welcome to NewsHive!");
         }
     }
+
+
 
 
 
