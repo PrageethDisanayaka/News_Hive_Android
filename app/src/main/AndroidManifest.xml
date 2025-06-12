@@ -53,6 +53,10 @@
             android:name=".DeveloperInfoActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".NewsDetailActivity"
+            android:exported="false" />
+
 
     </application>
 

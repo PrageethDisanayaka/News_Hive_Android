@@ -1,5 +1,8 @@
 package com.example.digi_apps.newshive;
 
+
+import android.content.Intent; // Import Intent
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,7 +58,22 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             // If no image URL, set a default image or hide the ImageView
             holder.imageView.setImageResource(R.drawable.no_image_available); // Replace with your default
         }
+
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, NewsDetailActivity.class);
+            intent.putExtra(NewsDetailActivity.EXTRA_NEWS_ARTICLE, newsList.get(position)); // Match key
+            context.startActivity(intent);
+        });
+
+
+
+
     }
+
+
+
+
+
 
     @Override
     public int getItemCount() {
@@ -77,4 +95,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             categoryTextView = itemView.findViewById(R.id.news_category_tag);
         }
     }
+
+
+    public void updateNewsList(List<NewsArticle> newNewsList) {
+        this.newsList = newNewsList;
+        notifyDataSetChanged(); // Notify adapter that data has changed
+    }
+
 }
