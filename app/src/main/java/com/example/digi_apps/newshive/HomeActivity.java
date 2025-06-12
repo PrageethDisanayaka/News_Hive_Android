@@ -27,6 +27,11 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList; // Import ArrayList
 import java.util.List; // Import List
 
+import androidx.appcompat.app.AlertDialog;
+import android.content.DialogInterface;
+import com.google.firebase.auth.FirebaseAuth; //  this import for Firebase Auth
+import android.content.Intent; //  this import for Intent
+
 public class HomeActivity extends AppCompatActivity {
 
     private RecyclerView newsRecyclerView;
@@ -155,14 +160,7 @@ public class HomeActivity extends AppCompatActivity {
                     // TODO: Implement navigation to Developer Information Activity
                     return true;
                 } else if (itemId == R.id.menu_sign_out) {
-                    // Sign out the user
-                    FirebaseAuth.getInstance().signOut();
-                    Toast.makeText(HomeActivity.this, "Signed out successfully.", Toast.LENGTH_SHORT).show();
-                    // Redirect to LoginActivity after sign out
-                    Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Clear back stack
-                    startActivity(intent);
-                    finish(); // Finish HomeActivity
+                    showSignOutConfirmationDialog();
                     return true;
                 }
                 return false;
@@ -200,4 +198,37 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
+    private void showSignOutConfirmationDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Sign Out") // Title of the dialog
+                .setMessage("Do You Really need to Sign out?") // Message as per your design
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // User clicked "Yes", so proceed with sign out
+                        performSignOut();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // User clicked "No", just dismiss the dialog
+                        dialog.dismiss();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert) // Optional: Add an alert icon
+                .show();
+    }
+
+    private void performSignOut() {
+        FirebaseAuth.getInstance().signOut(); // Sign out from Firebase
+
+        // Navigate back to the LoginActivity
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Clears activity stack
+        startActivity(intent);
+        finish(); // Finish the current activity
+    }
+
 }
