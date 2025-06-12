@@ -93,14 +93,15 @@ public class ProfileSettingsActivity extends AppCompatActivity {
 
 
 
-        // Set OnClickListener for Edit Profile (placeholder for now)
         editProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ProfileSettingsActivity.this, "Edit Profile clicked!", Toast.LENGTH_SHORT).show();
-                // TODO: Implement navigation to an Edit Profile screen later
+                Intent intent = new Intent(ProfileSettingsActivity.this, EditProfileActivity.class);
+                intent.putExtra("email", profileEmail.getText().toString()); // Pass current user email
+                startActivity(intent);
             }
         });
+
 
         // Initialize the Sign Out button
         signOutButton = findViewById(R.id.sign_out_button_profile);
