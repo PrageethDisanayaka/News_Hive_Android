@@ -29,6 +29,7 @@ import java.util.List; // Import List
 
 import androidx.appcompat.app.AlertDialog;
 import android.content.DialogInterface;
+import androidx.appcompat.widget.Toolbar;
 import com.google.firebase.auth.FirebaseAuth; //  this import for Firebase Auth
 import android.content.Intent; //  this import for Intent
 
@@ -63,6 +64,7 @@ public class HomeActivity extends AppCompatActivity {
         searchEditText = findViewById(R.id.search_edit_text);
         homeTitleText = findViewById(R.id.home_title_text);
         overflowMenuButton = findViewById(R.id.overflow_menu_button);
+
 
 
 
@@ -157,7 +159,9 @@ public class HomeActivity extends AppCompatActivity {
                     return true;
                 } else if (itemId == R.id.menu_developer_info) {
                     Toast.makeText(HomeActivity.this, "Developer info clicked!", Toast.LENGTH_SHORT).show();
-                    // TODO: Implement navigation to Developer Information Activity
+                    // : Implement navigation to Developer Information Activity
+                    Intent intent = new Intent(HomeActivity.this, DeveloperInfoActivity.class);
+                    startActivity(intent);
                     return true;
                 } else if (itemId == R.id.menu_sign_out) {
                     showSignOutConfirmationDialog();

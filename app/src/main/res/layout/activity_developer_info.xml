@@ -91,8 +91,9 @@
                         android:layout_marginTop="4dp"
                         android:textColor="#000000"
                         android:textSize="16sp"
-                        android:textStyle="bold"
-                        tools:text="D.M.P.S Disanayaka"/>
+                        android:text="D.M.P.S Disanayaka"
+                        android:textStyle="bold"/>
+
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -123,7 +124,8 @@
                         android:textColor="#000000"
                         android:textSize="16sp"
                         android:textStyle="bold"
-                        tools:text="2022t01526"/>
+                        android:text="2022t01526"/>
+
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -154,7 +156,8 @@
                         android:textColor="#000000"
                         android:textSize="16sp"
                         android:textStyle="bold"
-                        tools:text="v1.1.0"/>
+                        android:text="v1.1.0"/>
+
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -185,7 +188,7 @@
                         android:textColor="#000000"
                         android:textSize="16sp"
                         android:lineSpacingExtra="4dp"
-                        tools:text="Passionate software developer with a focus on mobile applications and user experience. Always eager to learn new technologies and contribute to innovative projects."/>
+                        android:text="Passionate software developer with a focus on mobile applications and user experience. Always eager to learn new technologies and contribute to innovative projects."/>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
