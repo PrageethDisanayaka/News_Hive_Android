@@ -13,6 +13,9 @@ import android.widget.TextView;
 import android.widget.Toast; // Import Toast
 import androidx.appcompat.widget.PopupMenu;
 import android.view.MenuItem; // Import MenuItem
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import android.view.MenuItem;
+
 
 
 
@@ -63,7 +66,34 @@ public class HomeActivity extends AppCompatActivity {
         newsRecyclerView = findViewById(R.id.news_recycler_view);
         searchEditText = findViewById(R.id.search_edit_text);
         homeTitleText = findViewById(R.id.home_title_text);
-        overflowMenuButton = findViewById(R.id.overflow_menu_button);
+
+
+
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+
+        // Set default selected tab to "Education"
+        bottomNav.setSelectedItemId(R.id.nav_education);
+        filterNewsByCategory("education"); // Load education news on login
+
+        // Handle tab selection
+        bottomNav.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+
+            if (id == R.id.nav_sports) {
+                filterNewsByCategory("sports");
+                return true;
+            } else if (id == R.id.nav_education) {
+                filterNewsByCategory("education");
+                return true;
+            } else if (id == R.id.nav_events) {
+                filterNewsByCategory("events");
+                return true;
+            }
+
+            return false;
+        });
+
+
 
 
 
@@ -79,6 +109,8 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+
+
         // Set OnClickListener for the search EditText to go to SearchActivity
         searchEditText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,6 +119,9 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        overflowMenuButton = findViewById(R.id.overflow_menu_button);
+
 
         // --- NEW: Set OnClickListener for the overflow menu button ---
         overflowMenuButton.setOnClickListener(new View.OnClickListener() {
@@ -109,6 +144,31 @@ public class HomeActivity extends AppCompatActivity {
         // Fetch news data from Firebase
         fetchNewsData();
     }
+
+    private void filterNewsByCategory(String category) {
+        DatabaseReference newsRef = mDatabase.child("news");
+
+        newsRef.orderByChild("category").equalTo(category)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        newsList.clear();
+                        for (DataSnapshot articleSnapshot : snapshot.getChildren()) {
+                            NewsArticle article = articleSnapshot.getValue(NewsArticle.class);
+                            if (article != null) {
+                                newsList.add(article);
+                            }
+                        }
+                        newsAdapter.setNewsList(newsList);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(HomeActivity.this, "Failed to load news.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
 
     @Override
     protected void onStart() {
@@ -234,5 +294,7 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(intent);
         finish(); // Finish the current activity
     }
+
+
 
 }
