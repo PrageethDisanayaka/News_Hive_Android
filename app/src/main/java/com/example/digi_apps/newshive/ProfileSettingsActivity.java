@@ -149,5 +149,8 @@ public class ProfileSettingsActivity extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Clears activity stack
         startActivity(intent);
         finish(); // Finish the current activity
+
+        getSharedPreferences("loginPrefs", MODE_PRIVATE).edit().clear().apply();
+
     }
 }

@@ -28,6 +28,21 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        boolean isLoggedIn = getSharedPreferences("loginPrefs", MODE_PRIVATE)
+                .getBoolean("isLoggedIn", false);
+
+        if (isLoggedIn) {
+            String username = getSharedPreferences("loginPrefs", MODE_PRIVATE).getString("username", "");
+            String email = getSharedPreferences("loginPrefs", MODE_PRIVATE).getString("email", "");
+
+            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+            intent.putExtra("username", username);
+            intent.putExtra("email", email);
+            startActivity(intent);
+            finish(); // Don't show login screen again
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -62,8 +77,10 @@ public class LoginActivity extends AppCompatActivity {
         forgotPasswordText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(LoginActivity.this, "Forgot Password clicked!", Toast.LENGTH_SHORT).show();
-                // Later: Implement password reset functionality
+                Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
+                startActivity(intent);
+
+                // Link password reset functionality
             }
         });
     }
@@ -71,6 +88,7 @@ public class LoginActivity extends AppCompatActivity {
     private void loginUser() {
         final String email = emailEditText.getText().toString().trim();
         final String password = passwordEditText.getText().toString().trim();
+
 
         // 1. Client-side Validation
         if (TextUtils.isEmpty(email)) {
@@ -110,6 +128,14 @@ public class LoginActivity extends AppCompatActivity {
                                     startActivity(intent);
                                     finish();
                                     // Exit loop after finding the user
+
+                                    getSharedPreferences("loginPrefs", MODE_PRIVATE)
+                                            .edit()
+                                            .putBoolean("isLoggedIn", true)
+                                            .putString("username", user.username)
+                                            .putString("email", user.email)
+                                            .apply();
+
                                 }
                             }
                             // If loop finishes, it means email matched but password didn't (or user was null)
@@ -126,5 +152,11 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
+
+
+
+
+
+
     }
 }
