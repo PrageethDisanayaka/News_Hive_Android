@@ -208,7 +208,7 @@ public class HomeActivity extends AppCompatActivity {
                     startActivity(intent);
                     return true;
                 } else if (itemId == R.id.menu_developer_info) {
-                    Toast.makeText(HomeActivity.this, "Developer info clicked!", Toast.LENGTH_SHORT).show();
+
                     // : Implement navigation to Developer Information Activity
                     Intent intent = new Intent(HomeActivity.this, DeveloperInfoActivity.class);
                     startActivity(intent);
