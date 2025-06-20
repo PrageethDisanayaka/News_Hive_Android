@@ -141,8 +141,11 @@ public class SignupActivity extends AppCompatActivity {
                                                                 Toast.makeText(SignupActivity.this, "Registration successful!", Toast.LENGTH_SHORT).show();
                                                                 // Navigate to HomeActivity after successful registration
                                                                 Intent intent = new Intent(SignupActivity.this, HomeActivity.class);
+                                                                intent.putExtra("username", username); // pass the username
+                                                                intent.putExtra("email", email);       // pass the email
                                                                 startActivity(intent);
-                                                                finish(); // Close SignupActivity
+                                                                finish();
+
                                                             })
                                                             .addOnFailureListener(e -> {
                                                                 Toast.makeText(SignupActivity.this, "Registration failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
