@@ -28,6 +28,21 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        boolean isLoggedIn = getSharedPreferences("loginPrefs", MODE_PRIVATE)
+                .getBoolean("isLoggedIn", false);
+
+        if (isLoggedIn) {
+            String username = getSharedPreferences("loginPrefs", MODE_PRIVATE).getString("username", "");
+            String email = getSharedPreferences("loginPrefs", MODE_PRIVATE).getString("email", "");
+
+            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+            intent.putExtra("username", username);
+            intent.putExtra("email", email);
+            startActivity(intent);
+            finish(); // Don't show login screen again
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -57,20 +72,40 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        // Optional: Implement Forgot Password link if needed later
+        // Implement Forgot Password link
         TextView forgotPasswordText = findViewById(R.id.forgot_password_text);
         forgotPasswordText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(LoginActivity.this, "Forgot Password clicked!", Toast.LENGTH_SHORT).show();
-                // Later: Implement password reset functionality
+
+                Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
+                startActivity(intent);
+
+                
+
             }
         });
     }
 
+    private boolean isInternetAvailable() {
+        android.net.ConnectivityManager cm =
+                (android.net.ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        android.net.NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        return activeNetwork != null && activeNetwork.isConnected();
+    }
+
+
     private void loginUser() {
         final String email = emailEditText.getText().toString().trim();
         final String password = passwordEditText.getText().toString().trim();
+        
+
+
+        if (!isInternetAvailable()) {
+            Toast.makeText(LoginActivity.this, "No internet connection. Please check your connection.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
 
         // 1. Client-side Validation
         if (TextUtils.isEmpty(email)) {
@@ -86,7 +121,7 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        // 2. Query Firebase Realtime Database for the user
+        //  Query Firebase Realtime Database for the user
         DatabaseReference usersRef = mDatabase.child("users");
         usersRef.orderByChild("email").equalTo(email)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -97,19 +132,30 @@ public class LoginActivity extends AppCompatActivity {
                             for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                                 User user = userSnapshot.getValue(User.class); // Get User object
 
-                                // !! IMPORTANT: In a real app, you would compare hashed passwords here.
-                                // For this assignment, we are comparing plain text passwords as per instruction.
+
                                 if (user != null && user.password.equals(password)) {
                                     Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
+
+
                                     // Navigate to HomeActivity
                                     Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                    intent.putExtra("username", user.username); // Pass the username
+                                    intent.putExtra("email", user.email);       //  Also pass email
                                     startActivity(intent);
-                                    finish(); // Close LoginActivity so user can't go back here with back button
-                                    return; // Exit loop after finding the user
+                                    finish();
+                                    // Exit loop after finding the user
+
+                                    getSharedPreferences("loginPrefs", MODE_PRIVATE)
+                                            .edit()
+                                            .putBoolean("isLoggedIn", true)
+                                            .putString("username", user.username)
+                                            .putString("email", user.email)
+                                            .apply();
+
                                 }
                             }
                             // If loop finishes, it means email matched but password didn't (or user was null)
-                            Toast.makeText(LoginActivity.this, "Incorrect email or password.", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(LoginActivity.this, "Incorrect email or password.", Toast.LENGTH_SHORT).show();
 
                         } else {
                             // No user found with this email
@@ -122,5 +168,11 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
+
+
+
+
+
+
     }
 }

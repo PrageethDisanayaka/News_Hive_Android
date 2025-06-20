@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">NewsHive</string>
-    <string name="login_header">Hello ... Sign in !</string>
+    <string name="login_header">Hello ..."\n"Sign in !</string>
     <string name="email_address_hint">Email address</string>
     <string name="password_hint">Password</string>
     <string name="sign_in_button_text">Sign in</string>

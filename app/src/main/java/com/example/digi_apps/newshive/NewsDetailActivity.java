@@ -1,8 +1,3 @@
-package com.example.digi_apps.newshive;
-
-public class NewsDetailActivity {
-}
-/*
 package com.example.digi_apps.newshive; // Make sure this matches your actual package name
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -80,4 +75,4 @@ public class NewsDetailActivity extends AppCompatActivity {
             // You might want to finish() the activity here or show a Toast
         }
     }
-}*/
+}
