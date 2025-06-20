@@ -101,7 +101,12 @@ public class EditProfileActivity extends AppCompatActivity {
                 User updatedUser = new User(newUsername, newEmail, newPassword);
                 usersRef.child(userKey).setValue(updatedUser)
                         .addOnSuccessListener(aVoid -> {
+
+                            getSharedPreferences("loginPrefs", MODE_PRIVATE).edit().clear().apply();
+
                             Toast.makeText(this, "User details updated. Log in with new details.", Toast.LENGTH_SHORT).show();
+
+                            //  Redirect to Login screen
                             Intent intent = new Intent(this, LoginActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
@@ -109,6 +114,7 @@ public class EditProfileActivity extends AppCompatActivity {
                         })
                         .addOnFailureListener(e -> {
                             Toast.makeText(this, "Update failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
+
                         });
             } else {
                 Toast.makeText(this, "User key not found.", Toast.LENGTH_SHORT).show();
