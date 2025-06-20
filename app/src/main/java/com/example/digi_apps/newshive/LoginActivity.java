@@ -128,23 +128,14 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()) {
-                            // User with this email exists, now verify password
+                            boolean loginSuccess = false; // Track if password matched
+
                             for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-                                User user = userSnapshot.getValue(User.class); // Get User object
-
-
+                                User user = userSnapshot.getValue(User.class);
                                 if (user != null && user.password.equals(password)) {
                                     Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
 
-
-                                    // Navigate to HomeActivity
-                                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                                    intent.putExtra("username", user.username); // Pass the username
-                                    intent.putExtra("email", user.email);       //  Also pass email
-                                    startActivity(intent);
-                                    finish();
-                                    // Exit loop after finding the user
-
+                                    // Save session
                                     getSharedPreferences("loginPrefs", MODE_PRIVATE)
                                             .edit()
                                             .putBoolean("isLoggedIn", true)
@@ -152,16 +143,26 @@ public class LoginActivity extends AppCompatActivity {
                                             .putString("email", user.email)
                                             .apply();
 
+                                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                    intent.putExtra("username", user.username);
+                                    intent.putExtra("email", user.email);
+                                    startActivity(intent);
+                                    finish();
+
+                                    loginSuccess = true;
+                                    break;
                                 }
                             }
-                            // If loop finishes, it means email matched but password didn't (or user was null)
-                            //Toast.makeText(LoginActivity.this, "Incorrect email or password.", Toast.LENGTH_SHORT).show();
+
+                            if (!loginSuccess) {
+                                Toast.makeText(LoginActivity.this, "Incorrect email or password.", Toast.LENGTH_SHORT).show();
+                            }
 
                         } else {
-                            // No user found with this email
                             Toast.makeText(LoginActivity.this, "Incorrect email or password.", Toast.LENGTH_SHORT).show();
                         }
                     }
+
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
