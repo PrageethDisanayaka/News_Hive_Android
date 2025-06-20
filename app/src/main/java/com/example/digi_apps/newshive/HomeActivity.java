@@ -100,18 +100,6 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
-        // Set up Top Bar Back Button (from UI doc)
-        ImageButton backButtonHome = findViewById(R.id.back_button_home);
-        backButtonHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // This button navigates back. For Home screen, typically goes to previous activity
-                // or closes the app if Home is the base. For now, let's finish the activity.
-                finish();
-            }
-        });
-
-
 
         // Set OnClickListener for the search EditText to go to SearchActivity
         searchEditText.setOnClickListener(new View.OnClickListener() {
