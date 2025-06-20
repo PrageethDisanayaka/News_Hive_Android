@@ -1,4 +1,6 @@
+
 package com.example.digi_apps.newshive;
+
 
 import androidx.annotation.NonNull; // Import for @NonNull annotation
 import androidx.appcompat.app.AppCompatActivity;

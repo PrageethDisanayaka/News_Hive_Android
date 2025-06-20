@@ -61,7 +61,22 @@ public class SignupActivity extends AppCompatActivity {
         });
     }
 
+
+    private boolean isInternetAvailable() {
+        android.net.ConnectivityManager cm =
+                (android.net.ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        android.net.NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        return activeNetwork != null && activeNetwork.isConnected();
+    }
+
+
     private void registerUser() {
+
+        if (!isInternetAvailable()) {
+            Toast.makeText(SignupActivity.this, "No internet connection. Please check your connection.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         final String username = usernameEditText.getText().toString().trim();
         final String email = emailEditText.getText().toString().trim();
         final String password = passwordEditText.getText().toString().trim();

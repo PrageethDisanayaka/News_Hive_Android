@@ -72,22 +72,39 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        // Optional: Implement Forgot Password link if needed later
+        // Implement Forgot Password link
         TextView forgotPasswordText = findViewById(R.id.forgot_password_text);
         forgotPasswordText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
                 startActivity(intent);
 
-                // Link password reset functionality
+                
+
             }
         });
     }
 
+    private boolean isInternetAvailable() {
+        android.net.ConnectivityManager cm =
+                (android.net.ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        android.net.NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        return activeNetwork != null && activeNetwork.isConnected();
+    }
+
+
     private void loginUser() {
         final String email = emailEditText.getText().toString().trim();
         final String password = passwordEditText.getText().toString().trim();
+        
+
+
+        if (!isInternetAvailable()) {
+            Toast.makeText(LoginActivity.this, "No internet connection. Please check your connection.", Toast.LENGTH_LONG).show();
+            return;
+        }
 
 
         // 1. Client-side Validation
@@ -104,7 +121,7 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        // 2. Query Firebase Realtime Database for the user
+        //  Query Firebase Realtime Database for the user
         DatabaseReference usersRef = mDatabase.child("users");
         usersRef.orderByChild("email").equalTo(email)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -116,7 +133,6 @@ public class LoginActivity extends AppCompatActivity {
                                 User user = userSnapshot.getValue(User.class); // Get User object
 
 
-                                
                                 if (user != null && user.password.equals(password)) {
                                     Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
 
