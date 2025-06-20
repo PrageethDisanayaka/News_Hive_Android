@@ -21,15 +21,6 @@
             android:layout_height="64dp"  app:contentInsetStartWithNavigation="0dp"
             android:background="#FFFFFF">
 
-            <ImageButton
-                android:id="@+id/back_button_home"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="16dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_arrow_back_black_24dp" app:tint="#000000"
-                android:contentDescription="Back" />
-
             <TextView
                 android:id="@+id/home_title_text"
                 android:layout_width="wrap_content"
